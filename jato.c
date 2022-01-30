@@ -40,20 +40,20 @@ void reshape(int width, int height){
   glMatrixMode(GL_MODELVIEW);
 }
 
-void compoe_jato(void){
+void desenha_jato(void){
   GLUquadricObj *quadric; //quadrica (cones, cilindros e esferas)
 
   GLfloat asa[][3]={ //coords dos poligonos
-    {-4.0,0.0,0.0},
-    {+4.0,0.0,0.0},
+    {-2.5,0.0,0.0},
+    {+2.5,0.0,0.0},
     {0.0,0.0,3.0}
   };
 
   GLfloat cauda[][3]={
     {0.0,0.0,0.0},
-    {0.0,2.0,-1.0},
-    {0.0,2.0,0.0},
-    {0.0,0.0,2.0}
+    {0.0,1.5,-1.0},
+    {0.0,1.5,0.0},
+    {0.0,0.0,1.5}
   };
 
 
@@ -68,19 +68,20 @@ void compoe_jato(void){
   glTexCoord2fv(cta[0]); glVertex3fv(asa[0]);
   glTexCoord2fv(cta[1]); glVertex3fv(asa[1]);
   glTexCoord2fv(cta[3]); glVertex3fv(asa[2]);
+  glDisable(GL_TEXTURE_2D);
   glEnd();
 
  
   quadric = gluNewQuadric(); //corpo (cilindro)
   gluQuadricTexture(quadric, GL_TRUE); //habilita o mapeamento de textura
-  gluCylinder(quadric, 0.5, 0.5, 4, 12, 3);
+  gluCylinder(quadric, 0.3, 0.3, 4, 12, 3);
   
  
   quadric = gluNewQuadric(); //frente
   gluQuadricTexture(quadric, GL_TRUE);
   glPushMatrix();
   glTranslatef(0,0,4);
-  gluCylinder(quadric, 0.5, 0.0, 1.5, 12, 3);
+  gluCylinder(quadric, 0.3, 0.0, 1.5, 12, 3);
   glPopMatrix();
 
 
@@ -91,11 +92,11 @@ void compoe_jato(void){
   glTexCoord2fv(cta[3]); glVertex3fv(cauda[3]);
   glEnd();
 
-  glTranslatef(0,0.3,3.5); //cabine
+  glTranslatef(0,0.3,3.0); //cabine
   glPushMatrix();
-  glScalef(0.7,0.7,2.0);
+  glScalef(0.4,0.4,2.0);
   quadric=gluNewQuadric();
-  glColor4f(1,0.5,1,4.5);
+  glColor4f(1,1.0,1,1.0);
   glDisable(GL_TEXTURE_2D);
   gluSphere(quadric,0.5,12,12);
   glPopMatrix();
@@ -130,14 +131,11 @@ void display(void){
   
   glBindTexture(GL_TEXTURE_2D,textura_plano);
   glBegin(GL_QUADS);
-
-
   //colocando a textura de mcz no plano
-  glTexCoord2f(0, 1); glVertex3f( -10, 0, 10);
-  glTexCoord2f(0, 0); glVertex3f( 10,  0, 10);
-  glTexCoord2f(1, 1); glVertex3f( 10,  0,  -10);
-  glTexCoord2f(1, 0); glVertex3f( -10, 0,  -10);
-  
+  glTexCoord2f(0, 1); glVertex3f( -10, 0, 15);
+  glTexCoord2f(0, 0); glVertex3f( 10,  0, 15);
+  glTexCoord2f(1, 1); glVertex3f( 10,  0,  -15);
+  glTexCoord2f(1, 0); glVertex3f( -10, 0,  -15);
   glEnd();
 
   glTranslatef(0.0,2.0,-3.0);
@@ -203,14 +201,14 @@ void init(){
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
   carregar_texturas();
-  compoe_jato();
+  desenha_jato();
   glEnable(GL_TEXTURE_2D);
 
   //iluminação
   glEnable(GL_LIGHT0);
   glEnable(GL_LIGHTING);
   glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
-  //glEnable(GL_COLOR_MATERIAL);
+  glEnable(GL_COLOR_MATERIAL);
 }
 
 int main(int argc,char **argv){
@@ -224,7 +222,7 @@ int main(int argc,char **argv){
 
   init();
   
-  glutKeyboardFunc(keyboard);
+  //glutKeyboardFunc(keyboard);
   glutSpecialFunc(special);
   glutDisplayFunc(display);
   glutReshapeFunc(reshape);
