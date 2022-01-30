@@ -18,8 +18,10 @@ GLuint  textura_aviao;
 
 
 GLfloat tetaxz=0; //angulo de rotação do ponto de observação
-GLfloat raioxz=6; //distancia entre obs e img
+GLfloat raioxz=9; //distancia entre obs e img
 GLuint  jato; //id p/ lista de apresentação do jato
+
+GLfloat acc = 1; //movimentador do aviao
 
 
 GLfloat cta[4][2]={ //para haver repetição da textura no corpo do jato
@@ -138,7 +140,7 @@ void display(void){
   glTexCoord2f(1, 0); glVertex3f( -10, 0,  -15);
   glEnd();
 
-  glTranslatef(0.0,2.0,-3.0);
+  glTranslatef(1.0,2.0,-9.0 + acc); //posição inicial jato
   glColor4f(1.0, 1.0, 1.0, 1.0);
   glBindTexture(GL_TEXTURE_2D,textura_aviao);
   glCallList(jato);
@@ -177,15 +179,12 @@ void keyboard(unsigned char key, int x, int y){
   case 27:
     exit(0);
     break;
-  case 'r':
-    raioxz=raioxz+1;
+  case 'w':
+    acc=acc+1;
     glutPostRedisplay();
     break;
-  case 'R':
-    raioxz=raioxz-1;
-    if(raioxz==0){
-      raioxz=1;
-    }
+  case 's':
+    acc=acc-1;
     glutPostRedisplay();
     break;
   }
@@ -222,7 +221,7 @@ int main(int argc,char **argv){
 
   init();
   
-  //glutKeyboardFunc(keyboard);
+  glutKeyboardFunc(keyboard);
   glutSpecialFunc(special);
   glutDisplayFunc(display);
   glutReshapeFunc(reshape);
