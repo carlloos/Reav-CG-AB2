@@ -110,7 +110,7 @@ void desenha_jato(void){
 void display(void){
   glEnable(GL_DEPTH_TEST);
 
-  glClearColor(1.0,1.0,1.0,1.0);
+  glClearColor(0.5,0.5,0.5,0.5);
   glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
   
 
@@ -134,10 +134,10 @@ void display(void){
   glBindTexture(GL_TEXTURE_2D,textura_plano);
   glBegin(GL_QUADS);
   //colocando a textura de mcz no plano
-  glTexCoord2f(0, 1); glVertex3f( -10, 0, 15);
-  glTexCoord2f(0, 0); glVertex3f( 10,  0, 15);
-  glTexCoord2f(1, 1); glVertex3f( 10,  0,  -15);
-  glTexCoord2f(1, 0); glVertex3f( -10, 0,  -15);
+  glTexCoord2f(0, 1); glVertex3f( -10, 0, 10);
+  glTexCoord2f(0, 0); glVertex3f( 10,  0, 10);
+  glTexCoord2f(1, 0); glVertex3f( 10,  0,  -10);
+  glTexCoord2f(1, 1); glVertex3f( -10, 0,  -10);
   glEnd();
 
   glTranslatef(1.0,2.0,-9.0 + acc); //posição inicial jato
